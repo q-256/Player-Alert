@@ -23,15 +23,15 @@ public class PlayerAlertCommands extends CommandBase {
     }
 
     public String getCommandUsage(ICommandSender sender) {
-        return "§7----------------" + "\n" +
-                "/playerAlert add <player> §7- adds the player to your alert list" + "\n" +
-                "/playerAlert remove <player> §7- removes the player from your alert list" + "\n" +
-                "/playerAlert list §7- lists the players on your alert list" + "\n" +
-                "/playerAlert clear §7- clears your alert list" + "\n" +
-                "/playerAlert overlayX <pixels> §7- sets the X position of the overlay" + "\n" +
-                "/playerAlert overlayY <pixels> §7- sets the Y position of the overlay" + "\n" +
-                "/playerAlert overlayColor <red> <green> <blue> §7- sets the color of the overlay" + "\n" +
-                "§7----------------";
+        return "§7------------------------------------------------" + "\n" +
+                "§7/playerAlert add <player> §f- adds the player to your alert list" + "\n" +
+                "§7/playerAlert remove <player> §f- removes the player from your alert list" + "\n" +
+                "§7/playerAlert list §f- lists the players on your alert list" + "\n" +
+                "§7/playerAlert clear §f- clears your alert list" + "\n" +
+                "§7/playerAlert overlayX <pixels> §f- sets the X position of the overlay" + "\n" +
+                "§7/playerAlert overlayY <pixels> §f- sets the Y position of the overlay" + "\n" +
+                "§7/playerAlert overlayColor <red> <green> <blue> §f- sets the color of the overlay" + "\n" +
+                "§7------------------------------------------------";
     }
 
     public int getRequiredPermissionLevel() {
