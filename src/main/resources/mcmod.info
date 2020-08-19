@@ -1,0 +1,16 @@
+[
+{
+  "modid": "playerAlert",
+  "name": "PlayerAlert",
+  "description": "Alerts you whenever a certain player joins your lobby",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["q256"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
