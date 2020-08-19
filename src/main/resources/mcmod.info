@@ -6,7 +6,7 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
-  "updateUrl": "",
+  "updateUrl": "https://github.com/q-256/Player-Alert",
   "authorList": ["q256"],
   "credits": "",
   "logoFile": "",
