@@ -46,7 +46,7 @@ public class OverlayRenderer {
                 Collection<NetworkPlayerInfo> playerInfoMap = new ArrayList<>();
 
                 try {
-                    playerEntities = Minecraft.getMinecraft().thePlayer.worldObj.playerEntities;
+                    playerEntities = new ArrayList<>(Minecraft.getMinecraft().thePlayer.worldObj.playerEntities);
                     playerInfoMap = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
                 } catch (NullPointerException exception){
                     exception.printStackTrace();
@@ -65,13 +65,13 @@ public class OverlayRenderer {
                     if(player.getDisplayName().getFormattedText().contains("§k")) continue;
 
                     boolean visibleOnTab = false;
-                    
+
                     for(String playerInTab:playersInTab){
                         StringBuilder playerDisplayName = new StringBuilder(player.getDisplayName().getFormattedText().substring(2));
                         playerDisplayName.delete(playerDisplayName.length()-2, playerDisplayName.length());
                         if(playerDisplayName.toString().equals(playerInTab)) visibleOnTab = true;
                     }
-                    
+
                     if(!visibleOnTab) continue;
 
                     if (configHandler.isBlocked(player.getName())) {
