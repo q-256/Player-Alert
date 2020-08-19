@@ -2,6 +2,7 @@ package com.q256.playerAlert;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -36,13 +37,45 @@ public class OverlayRenderer {
 
     private void startTimer() {
         Timer timer = new Timer();
+
         TimerTask updateDisplay = new TimerTask() {
             public void run() {
+                //get lists of all player entities and the names of players visible in tab
+                //both are necessary to make sure you are in the same game as the other player and not just in the same server (Hypixel hosts up to 20 games/server)
+                List<EntityPlayer> playerEntities = new ArrayList<>();
+                Collection<NetworkPlayerInfo> playerInfoMap = new ArrayList<>();
+
+                try {
+                    playerEntities = Minecraft.getMinecraft().thePlayer.worldObj.playerEntities;
+                    playerInfoMap = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+                } catch (NullPointerException exception){
+                    exception.printStackTrace();
+                }
+
+                List<String> playersInTab = new ArrayList<>();
+                for(NetworkPlayerInfo playerInfo:playerInfoMap){
+                    playersInTab.add(Minecraft.getMinecraft().ingameGUI.getTabList().getPlayerName(playerInfo));
+                }
+
+                //conditionally add these players to the display list
                 displayedPlayersLock.lock();
                 displayedPlayers.clear();
-                for (String name : Utils.getAllPlayerNamesInWorld()) {
-                    if (configHandler.isBlocked(name)) {
-                        displayedPlayers.add(name);
+                for (EntityPlayer player:playerEntities) {
+                    if(player==null || player.getName()==null) continue;
+                    if(player.getDisplayName().getFormattedText().contains("§k")) continue;
+
+                    boolean visibleOnTab = false;
+                    
+                    for(String playerInTab:playersInTab){
+                        StringBuilder playerDisplayName = new StringBuilder(player.getDisplayName().getFormattedText().substring(2));
+                        playerDisplayName.delete(playerDisplayName.length()-2, playerDisplayName.length());
+                        if(playerDisplayName.toString().equals(playerInTab)) visibleOnTab = true;
+                    }
+                    
+                    if(!visibleOnTab) continue;
+
+                    if (configHandler.isBlocked(player.getName())) {
+                        displayedPlayers.add(player.getDisplayNameString());
                     }
                 }
                 displayedPlayersLock.unlock();
